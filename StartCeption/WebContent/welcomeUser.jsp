@@ -8,6 +8,9 @@
 </head>
 <body>
 <h1>Welcome</h1>
+	<form action="index.html" method="post">			
+		<input type="submit" value="Log out" />
+	</form>
 
 </body>
 </html>
