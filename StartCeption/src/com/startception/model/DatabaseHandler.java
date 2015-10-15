@@ -17,7 +17,7 @@ public class DatabaseHandler {
 
 		Client client = em.find(Client.class, email);
 		if (client != null) {
-			System.out.println(client.getEmail() + " " + client.getPassword());
+			
 			if (client.getPassword().equals(password)) {
 				return true;
 			}
