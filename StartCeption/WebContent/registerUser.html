@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Register here</title>
+</head>
+<body>
+	<fieldset>
+		<legend>Register here</legend>		
+		<form action="" method="get">
+			<table>
+				<tr><td><input type="email" name="email" placeholder="Email Adress" required /></td></tr>
+				<tr><td><input type="password" name="password" placeholder="Password" id="password" required /></td></tr>
+				<tr><td><input type="submit" value="Register now"/></td></tr>
+			</table>
+		</form>
+	</fieldset>
+	
+	<script>
+	function verifyNumeric(p){
+		var passToArray = JSON.parse(p);
+		for(int i = 0; i < passToArray.length; i++){
+			var c = passToArray[i];
+			if(c >= '0' && c <= '9')
+				return true;
+			}
+			
+		return false;
+		}
+	
+	function verifyLetter(p){
+		var passToArray = JSON.parse(p);
+		var numeric
+		for(int i = 0; i < passToArray.length; i++){
+			var c = passToArray[i];
+			if(c >= '0' && c <= '9'){
+				return true;
+			}
+		}
+		return false;
+	}
+		
+	
+	</script>
+
+</body>
+</html>
