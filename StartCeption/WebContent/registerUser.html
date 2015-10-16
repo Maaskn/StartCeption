@@ -3,45 +3,67 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Register here</title>
+
 </head>
 <body>
-	<fieldset>
+	<fieldset style="background-color: #E6E6E6;">
 		<legend>Register here</legend>		
 		<form action="" method="get">
 			<table>
 				<tr><td><input type="email" name="email" placeholder="Email Adress" required /></td></tr>
-				<tr><td><input type="password" name="password" placeholder="Password" id="password" required /></td></tr>
-				<tr><td><input type="submit" value="Register now"/></td></tr>
+				<tr><td><input type="password" name="password" placeholder="Password" id="pass" onchange="verifyPassword()" required /></td>
+				<td><div id="errorMsg"></div></td></tr>
+				<tr><td><input type="submit" value="Register now" id="regButton" disabled/></td></tr>
+				<tr><td>Already member? log in <a href="index.html">here!</a></td></tr>
 			</table>
 		</form>
 	</fieldset>
 	
-	<script>
-	function verifyNumeric(p){
-		var passToArray = JSON.parse(p);
-		for(int i = 0; i < passToArray.length; i++){
-			var c = passToArray[i];
-			if(c >= '0' && c <= '9')
-				return true;
+	<script type="text/javaScript">
+	document.getElementById("pass").addEventListener("mouseover",verifyPassword);
+	document.getElementById("pass").addEventListener("mouseout",verifyPassword);
+	document.getElementById("pass").addEventListener("click",verifyPassword);
+		function verifyPassword() {
+			var pass = document.getElementById("pass").value;
+			var passArray = pass.split('');
+			var acceptable = true;
+			var c;
+			for (var i = 0; i < passArray.length; i++) {
+				c = passArray[i];
+				if (!c.match(/^[A-Za-z0-9]+$/)) {
+					acceptable = false;
+					break;
+				}
+			}
+
+			generatePasswordMessage(acceptable, passArray, c);
+		}
+
+		function generatePasswordMessage(acceptable, passArray, c) {
+			var errorElement = document.getElementById("errorMsg");
+			errorElement.style.fontWeight = "bold";
+
+			var button = document.getElementById("regButton");
+
+			if (acceptable && passArray.length >= 6) {
+				errorElement.innerHTML = "Acceptable";
+				errorElement.style.backgroundColor = "#66FF33";
+				errorElement.style.fontStyle = "italic";
+				button.disabled = false;
+
+			} else {
+				var errorMessage;
+				errorElement.style.backgroundColor = "red";
+				errorMessage = "This character \(" + c + "\) is not valid, try again! ";
+				if (passArray.length < 6) {
+					errorElement.style.backgroundColor = "#FFCC00";
+					errorMessage = "Your password must have minimum 6 characters ";
+				}
+				errorElement.innerHTML = "Invalid! " + errorMessage;
+				button.disabled = true;
 			}
 			
-		return false;
 		}
-	
-	function verifyLetter(p){
-		var passToArray = JSON.parse(p);
-		var numeric
-		for(int i = 0; i < passToArray.length; i++){
-			var c = passToArray[i];
-			if(c >= '0' && c <= '9'){
-				return true;
-			}
-		}
-		return false;
-	}
-		
-	
 	</script>
-
 </body>
 </html>
