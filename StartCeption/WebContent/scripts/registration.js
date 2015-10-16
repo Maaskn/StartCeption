@@ -1,6 +1,14 @@
+	
+document.getElementById("passReg").addEventListener("mouseover",verifyPassword);
+document.getElementById("passReg").addEventListener("mouseout",verifyPassword);
+document.getElementById("passReg").addEventListener("click",verifyPassword);
 
+//document.getElementById("passLog").addEventListener("mouseover",verifyPassword);
+//document.getElementById("passLog").addEventListener("mouseout",verifyPassword);
+//document.getElementById("passLog").addEventListener("click",verifyPassword);
+	
 function verifyPassword() {
-	var pass = document.getElementById("pass").value;
+	var pass = document.getElementById("passReg").value;
 	var passArray = pass.split('');
 	var acceptable = true;
 	var c;
@@ -14,6 +22,8 @@ function verifyPassword() {
 
 	generatePasswordMessage(acceptable, passArray, c);
 }
+
+
 
 function generatePasswordMessage(acceptable, passArray, c) {
 	var errorElement = document.getElementById("errorMsg");
@@ -29,7 +39,7 @@ function generatePasswordMessage(acceptable, passArray, c) {
 
 	} else {
 		var errorMessage;
-		if (passArray.length < 6) {
+		if (passArray.length <= 6) {
 			errorElement.style.backgroundColor = "#FFCC00";
 			errorMessage = "Your password must have minimum 7 characters ";
 		} else {
@@ -40,4 +50,5 @@ function generatePasswordMessage(acceptable, passArray, c) {
 		errorElement.innerHTML = "Invalid! " + errorMessage;
 		button.disabled = true;
 	}
+	
 }
