@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.startception.model.Crypto;
+import com.startception.model.SecurityHandler;
 import com.startception.model.DatabaseHandler;
 
 /**
@@ -25,29 +25,38 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		
-		DatabaseHandler dbHandler = new DatabaseHandler();
-		Crypto crypto = new Crypto();
-		
 		RequestDispatcher rd;
-		if(dbHandler.verifyClient(crypto.hashText(email), crypto.hashText(password))) {
+		try{
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
 			
-			HttpSession session = request.getSession();
-            session.setAttribute("user", "user");
-            //setting session to expire in 30 mins
-            session.setMaxInactiveInterval(30*60);
-            Cookie userName = new Cookie("email", email);
-            userName.setMaxAge(30*60);
-            response.addCookie(userName);
-            response.sendRedirect("welcomeUser.jsp");
+			DatabaseHandler dbHandler = new DatabaseHandler();
+			String encrEmail = SecurityHandler.toHashText(email);
+			String encrPwd = SecurityHandler.toHashText(password);
+			
+			
+			if(dbHandler.verifyClient(encrEmail, encrPwd)) {
+				
+				HttpSession session = request.getSession();
+	            session.setAttribute("user", "user");
+	            //setting session to expire in 30 mins
+	            session.setMaxInactiveInterval(30*60);
+	            Cookie userName = new Cookie("email", email);
+	            userName.setMaxAge(30*60);
+	            response.addCookie(userName);
+	            response.sendRedirect("welcomeUser.jsp");
 
-		} else {
+			} else {
+				rd = request.getRequestDispatcher("index.html");
+				rd.forward(request, response);
+			}
+
+		}catch(Exception e){
+			e.printStackTrace();
 			rd = request.getRequestDispatcher("index.html");
 			rd.forward(request, response);
 		}
-		
+				
 	}
 
 }
