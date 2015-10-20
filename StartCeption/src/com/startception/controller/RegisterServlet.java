@@ -42,7 +42,7 @@ public class RegisterServlet extends HttpServlet {
 			boolean allowedpsw = SecurityHandler.analyzeCharacters(password, false);
 			
 			if(!allowedEmail || !allowedpsw){
-				System.out.println("not email or psw allowed to register");
+				
 				regMsg = "Sorry! This user is already registered!";
 				request.setAttribute("regFailMsg", regMsg);
 				rd = request.getRequestDispatcher("registerUser.jsp");			

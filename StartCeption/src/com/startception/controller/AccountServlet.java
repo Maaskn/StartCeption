@@ -52,7 +52,7 @@ public class AccountServlet extends HttpServlet {
 	            session.setAttribute("user", "user");
 	            //setting session to expire in 30 mins
 	            session.setMaxInactiveInterval(30*60);
-	            System.out.println("session created! id = "+session.getId());
+	           
 	            Cookie userName = new Cookie("email", email);
 	            userName.setMaxAge(30*60);
 	            response.addCookie(userName);
@@ -74,8 +74,7 @@ public class AccountServlet extends HttpServlet {
 	
 	private void controlInput(boolean allowedEmail,boolean allowedPsw,RequestDispatcher rd,
 			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{		
-		if(!allowedEmail || !allowedPsw){
-			System.out.println("not email or psw allowed");
+		if(!allowedEmail || !allowedPsw){			
 			loginErrorHandling(rd,request,response);
 		}
 	}
@@ -92,7 +91,7 @@ public class AccountServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		System.out.println("session invalidated! id = "+session.getId());
+		
 		session.invalidate();
 		String logOutMsg = "Welcome back!";
 		request.setAttribute("logOutMsg", logOutMsg);

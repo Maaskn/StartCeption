@@ -19,7 +19,6 @@ public class SecurityHandler {
 			hexString.append(Integer.toHexString(0xFF & hash[i]));
 		}
 
-		//System.out.println(hexString.toString());
 
 		return hexString.toString();
 
