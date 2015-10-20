@@ -3,10 +3,10 @@
 	<persistence-unit name="StartCeption" transaction-type="RESOURCE_LOCAL">
 		<class>com.startception.model.Client</class>
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/SCDB;create=true"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby:/SCDB/db;create=true"/>
 			<property name="javax.persistence.jdbc.user" value="StartCeption"/>
 			<property name="javax.persistence.jdbc.password" value="abc"/>
-			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
 			<property name="javax.persistence.schema-generation.database.action" value="create"/>
 			<property name="javax.persistence.schema-generation.scripts.action" value="create"/>
 			<property name="eclipselink.ddl-generation" value="create-tables"/>

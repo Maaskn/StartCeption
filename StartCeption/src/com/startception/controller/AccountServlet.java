@@ -31,11 +31,16 @@ public class AccountServlet extends HttpServlet {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			
-			DatabaseHandler dbHandler = new DatabaseHandler();
+			
 			String encrEmail = SecurityHandler.toHashText(email);
 			String encrPwd = SecurityHandler.toHashText(password);
+			boolean accountInDB;
 			
-			boolean accountInDB = dbHandler.verifyClient(encrEmail, encrPwd);
+			synchronized(this){
+				DatabaseHandler dbHandler = (DatabaseHandler)request.getServletContext().getAttribute("dbHandler");
+				accountInDB = dbHandler.verifyClient(encrEmail, encrPwd);
+			}
+			
 			
 			if(accountInDB) {
 				

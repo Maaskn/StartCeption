@@ -31,7 +31,7 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try{
-			DatabaseHandler dbHandler = new DatabaseHandler();
+			
 			
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
@@ -43,7 +43,14 @@ public class RegisterServlet extends HttpServlet {
 //			password = whiteliststuff
 			
 			RequestDispatcher rd;
-			boolean alreadyRegistered = dbHandler.verifyClient(crEmail,crPass);
+			DatabaseHandler dbHandler;
+			boolean alreadyRegistered;
+			
+			synchronized(this){
+				dbHandler = (DatabaseHandler)request.getServletContext().getAttribute("dbHandler");
+				alreadyRegistered = dbHandler.verifyClient(crEmail,crPass);
+			}
+			
 			String responseH1 = "";
 			String regMsg;
 			
