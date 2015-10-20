@@ -25,13 +25,16 @@ public class SecurityHandler {
 
 	}
 
-	public static boolean analyzeCharacters(String textToAnalize) {
-		char[] tmp = textToAnalize.toCharArray();
-
-		for (char c : tmp) {
-			boolean allowed = Character.isLetterOrDigit(c);
+	public static boolean analyzeCharacters(String textToAnalize, boolean isEmail) {
+		
+		if (isEmail) {
+			boolean allowed = textToAnalize.matches("^[A-Za-z0-9\\.@]+$");// Character.isLetterOrDigit(c);
 			if (!allowed)
-				return false;
+				return false;			
+		} else {
+			boolean allowed = textToAnalize.matches("^[A-Za-z0-9]+$");
+			if (!allowed)
+				return false;			
 		}
 		return true;
 	}

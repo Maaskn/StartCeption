@@ -25,12 +25,16 @@ public class AccountServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd;
+		RequestDispatcher rd = null;
 		
 		try{
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			
+			boolean allowedEmail = SecurityHandler.analyzeCharacters(email, true);
+			boolean allowedpsw = SecurityHandler.analyzeCharacters(password, false);
+			
+			controlInput(allowedEmail,allowedpsw,rd,request,response);			
 			
 			String encrEmail = SecurityHandler.toHashText(email);
 			String encrPwd = SecurityHandler.toHashText(password);
@@ -55,20 +59,33 @@ public class AccountServlet extends HttpServlet {
 	            response.sendRedirect("welcomeUser.jsp");
 
 			} else {
-				String loginErrorMsg = "Login failed!";
-				request.setAttribute("loginErrorMsg", loginErrorMsg);
-				rd = request.getRequestDispatcher("index.jsp");
-				rd.forward(request, response);
+				loginErrorHandling(rd,request,response);
 			}
 
 		}catch(Exception e){
 			e.printStackTrace();
-			String errorMsg = "Oops! something failed! try again later!";
+			String errorMsg = "Oops! Something failed! try again later!";
 			request.setAttribute("errorMsg", errorMsg);
 			rd = request.getRequestDispatcher("index.jsp");
 			rd.forward(request, response);
 		}
 				
+	}
+	
+	private void controlInput(boolean allowedEmail,boolean allowedPsw,RequestDispatcher rd,
+			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{		
+		if(!allowedEmail || !allowedPsw){
+			System.out.println("not email or psw allowed");
+			loginErrorHandling(rd,request,response);
+		}
+	}
+	
+	private void loginErrorHandling(RequestDispatcher rd, HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException{
+		String loginErrorMsg = "Login failed!";
+		request.setAttribute("loginErrorMsg", loginErrorMsg);
+		rd = request.getRequestDispatcher("index.jsp");
+		rd.forward(request, response);
 	}
 
 	@Override

@@ -30,11 +30,26 @@ public class RegisterServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String responseH1 = "";
+		String regMsg;
+		RequestDispatcher rd;
 		try{
-			
 			
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
+			
+			boolean allowedEmail = SecurityHandler.analyzeCharacters(email, true);
+			boolean allowedpsw = SecurityHandler.analyzeCharacters(password, false);
+			
+			if(!allowedEmail || !allowedpsw){
+				System.out.println("not email or psw allowed to register");
+				regMsg = "Sorry! This user is already registered!";
+				request.setAttribute("regFailMsg", regMsg);
+				rd = request.getRequestDispatcher("registerUser.jsp");			
+				rd.forward(request, response);
+			}
+			
+			
 			String crEmail = SecurityHandler.toHashText(email);
 			String crPass = SecurityHandler.toHashText(password);
 			
@@ -42,7 +57,7 @@ public class RegisterServlet extends HttpServlet {
 //			email = whiteliststuff
 //			password = whiteliststuff
 			
-			RequestDispatcher rd;
+			
 			DatabaseHandler dbHandler;
 			boolean alreadyRegistered;
 			
@@ -51,8 +66,7 @@ public class RegisterServlet extends HttpServlet {
 				alreadyRegistered = dbHandler.verifyClient(crEmail,crPass);
 			}
 			
-			String responseH1 = "";
-			String regMsg;
+			
 			
 			if(alreadyRegistered) {
 				regMsg = "Sorry! This user is already registered!";
@@ -71,6 +85,10 @@ public class RegisterServlet extends HttpServlet {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+			regMsg = "Sorry! This user is already registered!";
+			request.setAttribute("regFailMsg", regMsg);
+			rd = request.getRequestDispatcher("registerUser.jsp");			
+			rd.forward(request, response);
 		}
 		
 	}
