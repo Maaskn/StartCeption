@@ -11,7 +11,7 @@ public class DatabaseHandler {
 	public DatabaseHandler() {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	}
-
+	//returns true if the client is already in db, false otherwise
 	public boolean verifyClient(String email, String password) {
 		EntityManager em = factory.createEntityManager();
 

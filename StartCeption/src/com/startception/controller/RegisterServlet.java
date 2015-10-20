@@ -48,17 +48,14 @@ public class RegisterServlet extends HttpServlet {
 			String regMsg;
 			
 			if(alreadyRegistered) {
-				responseH1 = "Sorry! This user is already registered";
-				regMsg = "Try to register again <a href=\"registerUser.html\">here</a>";
-				request.setAttribute("responseH1", responseH1);
-				request.setAttribute("titleRes", "Oops!");
-				request.setAttribute("regMsg", regMsg);
-				rd = request.getRequestDispatcher("regResponse.jsp");			
+				regMsg = "Sorry! This user is already registered!";
+				request.setAttribute("regFailMsg", regMsg);
+				rd = request.getRequestDispatcher("registerUser.jsp");			
 				rd.forward(request, response);
 			} else {
 				dbHandler.registerClient(crEmail,crPass);
 				responseH1 = "The registration was successful!";
-				regMsg = "Log in <a href=\"index.html\">here</a> now!";
+				regMsg = "Log in <a href=\"index.jsp\">here</a> now!";
 				request.setAttribute("responseH1", responseH1);
 				request.setAttribute("titleRes", "Welcome!");
 				request.setAttribute("regMsg", regMsg);

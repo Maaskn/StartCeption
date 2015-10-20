@@ -11,7 +11,7 @@
 <body>
 	<fieldset>
 		<legend>Login</legend>
-		<form action="LoginServlet" method="post">
+		<form action="AccountServlet" method="post">
 		<table>		
 			<tr><td><input type="email" name="email" placeholder="Email Adress" required /></td></tr> 
 			<tr>
@@ -19,11 +19,11 @@
 				<td><div id="errorMsg"></div></td>
 			</tr>
 			<tr><td><input type="submit"  value="Log in" id="logButton" disabled/></td></tr>
-			<tr><td>New member? register <a href="registerUser.html">here!</a></td></tr>
+			<tr><td>New member? register <a href="registerUser.jsp">here!</a></td></tr>
 		</table>
 		</form>
 	</fieldset>
-	<div><p></p></div>
+	<div><p>${logOutMsg}</p></div>
 	<script type="text/javaScript" src="scripts/login.js"></script>
 </body>
 </html>

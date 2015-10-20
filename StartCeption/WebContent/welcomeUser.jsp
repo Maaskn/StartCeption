@@ -11,7 +11,7 @@
 //allow access only if session exists
 String user = null;
 if(session.getAttribute("user") == null){
-    response.sendRedirect("login.html");
+    response.sendRedirect("index.jsp");
 }else user = (String) session.getAttribute("user");
 String userName = null;
 String sessionID = null;
@@ -24,7 +24,7 @@ for(Cookie cookie : cookies){
 }
 %>
 <h1>Welcome</h1>
-	<form action="index.html" method="post">			
+	<form action="AccountServlet" method="get">					
 		<input type="submit" value="Log out" />
 	</form>
 

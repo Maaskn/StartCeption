@@ -17,8 +17,8 @@ import com.startception.model.DatabaseHandler;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/AccountServlet")
+public class AccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -26,6 +26,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd;
+		
 		try{
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
@@ -34,29 +35,49 @@ public class LoginServlet extends HttpServlet {
 			String encrEmail = SecurityHandler.toHashText(email);
 			String encrPwd = SecurityHandler.toHashText(password);
 			
+			boolean accountInDB = dbHandler.verifyClient(encrEmail, encrPwd);
 			
-			if(dbHandler.verifyClient(encrEmail, encrPwd)) {
+			if(accountInDB) {
 				
 				HttpSession session = request.getSession();
 	            session.setAttribute("user", "user");
 	            //setting session to expire in 30 mins
 	            session.setMaxInactiveInterval(30*60);
+	            System.out.println("session created! id = "+session.getId());
 	            Cookie userName = new Cookie("email", email);
 	            userName.setMaxAge(30*60);
 	            response.addCookie(userName);
 	            response.sendRedirect("welcomeUser.jsp");
 
 			} else {
-				rd = request.getRequestDispatcher("index.html");
+				String loginErrorMsg = "Login failed!";
+				request.setAttribute("loginErrorMsg", loginErrorMsg);
+				rd = request.getRequestDispatcher("index.jsp");
 				rd.forward(request, response);
 			}
 
 		}catch(Exception e){
 			e.printStackTrace();
-			rd = request.getRequestDispatcher("index.html");
+			String errorMsg = "Oops! something failed! try again later!";
+			request.setAttribute("errorMsg", errorMsg);
+			rd = request.getRequestDispatcher("index.jsp");
 			rd.forward(request, response);
 		}
 				
 	}
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		System.out.println("session invalidated! id = "+session.getId());
+		session.invalidate();
+		String logOutMsg = "Welcome back!";
+		request.setAttribute("logOutMsg", logOutMsg);
+		RequestDispatcher rd= request.getRequestDispatcher("index.jsp");
+		rd.forward(request, response);
+	}
+	
+	
 
 }

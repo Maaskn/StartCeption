@@ -14,7 +14,7 @@
 				<tr><td><input type="password" name="password" placeholder="Password" id="passReg" onchange="verifyPassword()" required /></td>
 				<td><div id="errorMsg"></div></td></tr>
 				<tr><td><input type="submit" value="Register now" id="regButton" disabled/></td></tr>
-				<tr><td>Already member? log in <a href="index.html">here!</a></td></tr>
+				<tr><td>Already member? log in <a href="index.jsp">here!</a></td></tr>
 			</table>
 		</form>
 	</fieldset>
