@@ -26,6 +26,13 @@ public class ServContListener implements ServletContextListener {
      */
     public void contextDestroyed(ServletContextEvent event)  { 
          // TODO Auto-generated method stub
+    	ServletContext svCont = event.getServletContext();
+    	
+    	synchronized(svCont){
+    		DatabaseHandler dbHandler = (DatabaseHandler)svCont.getAttribute("dbHandler");
+    		if(dbHandler != null)dbHandler = null;
+    	}
+    	
     }
 
 	/**

@@ -43,7 +43,7 @@ public class RegisterServlet extends HttpServlet {
 			
 			if(!allowedEmail || !allowedpsw){
 				
-				regMsg = "Sorry! This user is already registered!";
+				regMsg = "Oops! something is not allowed here, try again!";
 				request.setAttribute("regFailMsg", regMsg);
 				rd = request.getRequestDispatcher("registerUser.jsp");			
 				rd.forward(request, response);

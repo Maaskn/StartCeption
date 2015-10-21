@@ -23,8 +23,7 @@
 		</table>
 		</form>
 	</fieldset>
-	<div><p>${loginErrorMsg}</p></div>
-	<div><p>${logOutMsg}</p></div>
+	<div><p>${loginErrorMsg}${logOutMsg}</p></div>
 	<script type="text/javaScript" src="scripts/login.js"></script>
 </body>
 </html>
