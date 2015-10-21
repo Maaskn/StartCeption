@@ -9,35 +9,22 @@
 <body>
 <%
 //allow access only if session exists
-String user = null;
-if(session.getAttribute("user") == null){
-    response.sendRedirect("index.jsp");
-}else user = (String) session.getAttribute("user");
+String user = (String) session.getAttribute("user");
 String userName = null;
 String sessionID = null;
 Cookie[] cookies = request.getCookies();
 if(cookies !=null){
 for(Cookie cookie : cookies){
-    if(cookie.getName().equals("user")) userName = cookie.getValue();
-    if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+  if(cookie.getName().equals("user")) userName = cookie.getValue();
+  if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
 }
 }
 %>
 <h1>Welcome</h1>
-
-<script charset="UTF-8" src="https://ssl.ditonlinebetalingssystem.dk/integration/ewindow/paymentwindow.js" type="text/javascript"></script>
- <script type="text/javascript">
-     paymentwindow = new PaymentWindow({
-         'merchantnumber': "8021018",
-         'amount': "10095",
-         'currency': "SEK",
-         'language': "2",
-         'orderid': "154"
-     });
- </script>
   
  <input onclick="javascript: paymentwindow.open()" type="button" value="Go to payment">
 
+<a href="paymentPage.jsp">Donate now!</a>
 	<form action="AccountServlet" method="get">					
 		<input type="submit" value="Log out" />
 	</form>
