@@ -34,7 +34,9 @@ public class AccountServlet extends HttpServlet {
 			boolean allowedEmail = SecurityHandler.analyzeCharacters(email, true);
 			boolean allowedpsw = SecurityHandler.analyzeCharacters(password, false);
 			
-			controlInput(allowedEmail,allowedpsw,rd,request,response);			
+			if(!allowedEmail || !allowedpsw){			
+				loginErrorHandling(rd,request,response);
+			}		
 			
 			String encrEmail = SecurityHandler.toHashText(email);
 			String encrPwd = SecurityHandler.toHashText(password);
@@ -71,14 +73,7 @@ public class AccountServlet extends HttpServlet {
 		}
 				
 	}
-	
-	private void controlInput(boolean allowedEmail,boolean allowedPsw,RequestDispatcher rd,
-			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{		
-		if(!allowedEmail || !allowedPsw){			
-			loginErrorHandling(rd,request,response);
-		}
-	}
-	
+		
 	private void loginErrorHandling(RequestDispatcher rd, HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException{
 		String loginErrorMsg = "Login failed!";

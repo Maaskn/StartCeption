@@ -1,12 +1,9 @@
-	
-document.getElementById("passReg").addEventListener("mouseover",verifyPassword);
-document.getElementById("passReg").addEventListener("mouseout",verifyPassword);
-document.getElementById("passReg").addEventListener("click",verifyPassword);
-
-//document.getElementById("passLog").addEventListener("mouseover",verifyPassword);
-//document.getElementById("passLog").addEventListener("mouseout",verifyPassword);
-//document.getElementById("passLog").addEventListener("click",verifyPassword);
-	
+//	
+//document.getElementById("passReg").addEventListener("mouseover",verifyPassword);
+//document.getElementById("passReg").addEventListener("mouseout",verifyPassword);
+//document.getElementById("passReg").addEventListener("click",verifyPassword);
+//document.getElementById("passLog").addEventListener("oninput",verifyPassword);
+//	
 function verifyPassword() {
 	var pass = document.getElementById("passReg").value;
 	var passArray = pass.split('');
@@ -32,7 +29,7 @@ function generatePasswordMessage(acceptable, passArray, c) {
 	var button = document.getElementById("regButton");
 
 	if (acceptable && passArray.length > 6) {
-		errorElement.innerHTML = "Acceptable";
+		errorElement.innerHTML = "This works perfectly!";
 		errorElement.style.backgroundColor = "#66FF33";
 		errorElement.style.fontStyle = "italic";
 		button.disabled = false;
@@ -41,11 +38,11 @@ function generatePasswordMessage(acceptable, passArray, c) {
 		var errorMessage;
 		if (passArray.length <= 6) {
 			errorElement.style.backgroundColor = "#FFCC00";
-			errorMessage = "Your password must have minimum 7 characters ";
+			errorMessage = "Write your password a little bit longer!";
 		} else {
 			errorElement.style.backgroundColor = "red";
-			errorMessage = "This character \(" + c
-					+ "\) is not valid, try again! ";
+			errorMessage = "We can't allow this character \(" + c
+					+ "\)! Only numbers and letters please!";
 		}
 		errorElement.innerHTML = "Invalid! " + errorMessage;
 		button.disabled = true;

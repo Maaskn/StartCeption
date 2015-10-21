@@ -1,0 +1,42 @@
+@CHARSET "ISO-8859-1";
+
+body{
+	background-image:url("http://3.bp.blogspot.com/-7C3D3689I5Y/U9TenrcF_DI/AAAAAAAAFww/A2UuY_0ou8g/s1600/(CONCRETE+13)+floor+tile+granite+stones+texture.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;   
+}
+
+h1,h2{
+	text-align: center;
+	font-family: "Lucida Console", Times, monospace;
+	font-weight: bold;
+	color: white;
+}
+
+fieldset{
+	background-image:url("http://img04.deviantart.net/c516/i/2010/243/c/1/cardboard_texture_stock_by_ymntlestock-d2xpf3o.jpg");
+	background-size: cover;
+    background-repeat: no-repeat;   
+}
+
+legend{
+	font-family: "Lucida Console", Times, monospace;
+	font-weight: bold;
+	color: white;
+}
+
+b {
+	background-color:yellow;
+	font-family: "Lucida Console", Times, monospace;
+}
+/*
+div{
+	background-image:url("http://blog.spoongraphics.co.uk/wp-content/uploads/2012/05/51.jpg");
+	background-size: cover;
+    background-repeat: no-repeat; 
+}
+*/
+p {
+	font-weight: bold;
+	color: white;
+}

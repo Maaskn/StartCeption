@@ -1,7 +1,8 @@
 
-document.getElementById("passLog").addEventListener("mouseover",verifyPassword);
-document.getElementById("passLog").addEventListener("mouseout",verifyPassword);
-document.getElementById("passLog").addEventListener("click",verifyPassword);
+//document.getElementById("passLog").addEventListener("mouseover",verifyPassword);
+//document.getElementById("passLog").addEventListener("mouseout",verifyPassword);
+//document.getElementById("passLog").addEventListener("click",verifyPassword);
+//document.getElementById("passLog").addEventListener("oninput",verifyPassword);
 	
 function verifyPassword() {
 	var pass = document.getElementById("passLog").value;
@@ -26,16 +27,23 @@ function generatePasswordMessage(acceptable, passArray, c) {
 	errorElement.style.fontWeight = "bold";
 	var errorMessage;
 	var button = document.getElementById("logButton");
-
-	if (!acceptable) {
-		errorElement.style.backgroundColor = "red";
-		errorMessage = "This character \(" + c + "\) is not valid, try again! ";
-		errorElement.innerHTML = "Invalid! " + errorMessage;
+	
+	if (passArray.length <= 6) {
+		errorElement.innerHTML = "";
 		button.disabled = true;
 	}else{
-		errorElement.innerHTML = "";
-		button.disabled = false;
+		if (!acceptable) {
+			errorElement.style.backgroundColor = "red";
+			errorMessage = "this character \(" + c + "\) is not valid! ";
+			errorElement.innerHTML = "Oh please! " + errorMessage;
+			button.disabled = true;
+		}else{
+			errorElement.innerHTML = "";
+			button.disabled = false;
+		}
 	}
+
+	
 		
 	
 	
