@@ -58,7 +58,12 @@ public class AccountServlet extends HttpServlet {
 	            Cookie userName = new Cookie("email", email);
 	            userName.setMaxAge(30*60);
 	            response.addCookie(userName);
-	            response.sendRedirect("welcomeUser.jsp");
+	            //response.sendRedirect("welcomeUser.jsp");
+	            request.setAttribute("email", email);
+	            request.setAttribute("sessionId", session.getId());
+	            request.setAttribute("cookieValue", userName.getValue());
+	            rd = request.getRequestDispatcher("welcomeUser.jsp");
+	            rd.forward(request, response);
 
 			} else {
 				loginErrorHandling(rd,request,response);
@@ -66,10 +71,11 @@ public class AccountServlet extends HttpServlet {
 
 		}catch(Exception e){
 			e.printStackTrace();
-			String errorMsg = "Oops! Something failed! try again later!";
-			request.setAttribute("errorMsg", errorMsg);
-			rd = request.getRequestDispatcher("index.jsp");
-			rd.forward(request, response);
+			response.sendRedirect("error.html");
+//			String errorMsg = "Oops! Something failed! try again later!";
+//			request.setAttribute("errorMsg", errorMsg);
+//			rd = request.getRequestDispatcher("index.jsp");
+//			rd.forward(request, response);
 		}
 				
 	}
@@ -85,8 +91,7 @@ public class AccountServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		
+		HttpSession session = request.getSession();		
 		session.invalidate();
 		String logOutMsg = "Welcome back!";
 		request.setAttribute("logOutMsg", logOutMsg);

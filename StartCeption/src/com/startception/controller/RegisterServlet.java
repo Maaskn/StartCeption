@@ -30,9 +30,10 @@ public class RegisterServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String responseH1 = "";
-		String regMsg;
-		RequestDispatcher rd;
+		
+		String regMsg = "Sorry! This user is already registered!";
+		RequestDispatcher rd = request.getRequestDispatcher("registerUser.jsp");
+		request.setAttribute("regFailMsg", regMsg);
 		try{
 			
 			String email = request.getParameter("email");
@@ -43,20 +44,14 @@ public class RegisterServlet extends HttpServlet {
 			
 			if(!allowedEmail || !allowedpsw){
 				
-				regMsg = "Oops! something is not allowed here, try again!";
-				request.setAttribute("regFailMsg", regMsg);
-				rd = request.getRequestDispatcher("registerUser.jsp");			
+				regMsg = "Oops! Something is not allowed here, try again!";
+				request.setAttribute("regFailMsg", regMsg);						
 				rd.forward(request, response);
 			}
 			
 			
 			String crEmail = SecurityHandler.toHashText(email);
 			String crPass = SecurityHandler.toHashText(password);
-			
-//			Någon whitelist här
-//			email = whiteliststuff
-//			password = whiteliststuff
-			
 			
 			DatabaseHandler dbHandler;
 			boolean alreadyRegistered;
@@ -66,29 +61,30 @@ public class RegisterServlet extends HttpServlet {
 				alreadyRegistered = dbHandler.verifyClient(crEmail,crPass);
 			}
 			
-			
-			
 			if(alreadyRegistered) {
-				regMsg = "Sorry! This user is already registered!";
-				request.setAttribute("regFailMsg", regMsg);
-				rd = request.getRequestDispatcher("registerUser.jsp");			
+				//regMsg = "Sorry! This user is already registered!";
+				
+				//rd = request.getRequestDispatcher("registerUser.jsp");			
 				rd.forward(request, response);
 			} else {
-				dbHandler.registerClient(crEmail,crPass);
-				responseH1 = "The registration was successful!";
-				regMsg = "Log in <a href=\"index.jsp\">here</a> now!";
-				request.setAttribute("responseH1", responseH1);
-				request.setAttribute("titleRes", "Welcome!");
-				request.setAttribute("regMsg", regMsg);
-				rd = request.getRequestDispatcher("regResponse.jsp");
-				rd.forward(request, response);
+				
+				if(dbHandler.registerClient(crEmail,crPass) == true){
+					response.sendRedirect("regResponse.html");
+				}else{
+					//regMsg = "Sorry! This user is already registered!";
+					//request.setAttribute("regFailMsg", regMsg);
+					//rd = request.getRequestDispatcher("registerUser.jsp");			
+					rd.forward(request, response);
+				}				
+				
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			regMsg = "Sorry! This user is already registered!";
-			request.setAttribute("regFailMsg", regMsg);
-			rd = request.getRequestDispatcher("registerUser.jsp");			
-			rd.forward(request, response);
+			response.sendRedirect("error.html");
+//			regMsg = "Sorry! This user is already registered!";
+//			request.setAttribute("regFailMsg", regMsg);
+//			rd = request.getRequestDispatcher("registerUser.jsp");			
+//			rd.forward(request, response);
 		}
 		
 	}
