@@ -1,5 +1,7 @@
 @CHARSET "ISO-8859-1";
 
+/*the main css to all the pages except the private ones*/
+
 body{
 	background-image:url("http://3.bp.blogspot.com/-7C3D3689I5Y/U9TenrcF_DI/AAAAAAAAFww/A2UuY_0ou8g/s1600/(CONCRETE+13)+floor+tile+granite+stones+texture.jpg");
 	background-size: cover;
@@ -29,13 +31,7 @@ b {
 	background-color:yellow;
 	font-family: "Lucida Console", Times, monospace;
 }
-/*
-div{
-	background-image:url("http://blog.spoongraphics.co.uk/wp-content/uploads/2012/05/51.jpg");
-	background-size: cover;
-    background-repeat: no-repeat; 
-}
-*/
+
 p {
 	font-weight: bold;
 	color: white;

@@ -10,17 +10,13 @@
 <body>
 <h1>Feed us to code to another day!</h1>
 <%
-	//allow access only if session exists
+	//Filter the access
 	Boolean authorized = (Boolean)(session.getAttribute("authorized"));
 	if(authorized == null){
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("../index.jsp");
 	}else{
-		if(!authorized){response.sendRedirect("index.jsp");}
+		if(!authorized){response.sendRedirect("../index.jsp");}
 	}
-	/*	if (session.getAttribute("authorized") == null) {
-		response.sendRedirect("index.jsp");
-	} 
-	*/
 %>
        
         <fieldset>

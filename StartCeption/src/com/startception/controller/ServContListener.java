@@ -29,6 +29,7 @@ public class ServContListener implements ServletContextListener {
     	ServletContext svCont = event.getServletContext();
     	
     	synchronized(svCont){
+    		//Delete the databaseHandler class
     		DatabaseHandler dbHandler = (DatabaseHandler)svCont.getAttribute("dbHandler");
     		if(dbHandler != null)dbHandler = null;
     	}
@@ -43,6 +44,7 @@ public class ServContListener implements ServletContextListener {
     	ServletContext svCont = event.getServletContext();
     	
     	synchronized(svCont){
+    		//Creates and initializes the databaseHandler class
     		DatabaseHandler dbHandler = new DatabaseHandler();
     		svCont.setAttribute("dbHandler", dbHandler);
     	}

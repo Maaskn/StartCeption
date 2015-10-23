@@ -31,12 +31,7 @@ public class AccountServlet extends HttpServlet {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			
-			boolean allowedEmail = SecurityHandler.analyzeCharacters(email, true);
-			boolean allowedpsw = SecurityHandler.analyzeCharacters(password, false);
-			
-			if(!allowedEmail || !allowedpsw){			
-				loginErrorHandling(rd,request,response);
-			}		
+			controlInputs(request,response,rd,email,password);
 			
 			String encrEmail = SecurityHandler.toHashText(email);
 			String encrPwd = SecurityHandler.toHashText(password);
@@ -47,37 +42,72 @@ public class AccountServlet extends HttpServlet {
 				accountInDB = dbHandler.verifyClient(encrEmail, encrPwd);
 			}
 			
-			
-			if(accountInDB) {
-				
-				HttpSession session = request.getSession();
-	            session.setAttribute("authorized", new Boolean(true));
-	            //setting session to expire in 30 mins
-	            session.setMaxInactiveInterval(30*60);
-	           
-	            Cookie userName = new Cookie("email", email);
-	            userName.setMaxAge(30*60);
-	            response.addCookie(userName);
-	            //response.sendRedirect("welcomeUser.jsp");
-	            request.setAttribute("email", email);
-	            rd = request.getRequestDispatcher("welcomeUser.jsp");
-	            rd.forward(request, response);
-
-			} else {
-				loginErrorHandling(rd,request,response);
-			}
+			accountHandling(accountInDB, email, request, response, rd);
+		
 
 		}catch(Exception e){
 			e.printStackTrace();
 			response.sendRedirect("error.html");
-//			String errorMsg = "Oops! Something failed! try again later!";
-//			request.setAttribute("errorMsg", errorMsg);
-//			rd = request.getRequestDispatcher("index.jsp");
-//			rd.forward(request, response);
 		}
 				
 	}
+	/**
+	 * This method verifies if the user is registered in the database, if not then the user is not allowed
+	 * to come in to the welcome page.
+	 * @param accountInDB the default boolean that verifies if the user is registered in the database
+	 * @param email the email of the user
+	 * @param request @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @param response @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @param rd @see loginErrorHandling(RequestDispatcher rd, HttpServletRequest request, HttpServletResponse response) 
+	 * @throws ServletException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @throws IOException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * */
+	private void accountHandling(boolean accountInDB,String email,HttpServletRequest request, HttpServletResponse response,
+			RequestDispatcher rd) throws ServletException, IOException{
+		if(accountInDB) {
+			
+			HttpSession session = request.getSession();
+            session.setAttribute("authorized", new Boolean(true));
+            
+            //setting session to expire in 30 mins
+            session.setMaxInactiveInterval(30*60);
+            request.setAttribute("email", email);
+            rd = request.getRequestDispatcher("user/welcomeUser.jsp");
+            rd.forward(request, response);
+
+		} else {
+			loginErrorHandling(rd,request,response);
+		}
+	}
+	
+	/**
+	 * This method verifies if the requested parameters of the site have allowed access to come through the application
+	 * @param request @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @param response @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @param rd @see loginErrorHandling(RequestDispatcher rd, HttpServletRequest request, HttpServletResponse response) 	
+	 * @param email the email to be verified
+	 * @param password the password to be verified
+	 * @throws ServletException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @throws IOException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * */	
+	private void controlInputs(HttpServletRequest request, HttpServletResponse response,
+			RequestDispatcher rd,String email, String password) throws ServletException, IOException{
+		boolean allowedEmail = SecurityHandler.analyzeCharacters(email, true);
+		boolean allowedpsw = SecurityHandler.analyzeCharacters(password, false);
 		
+		if(!allowedEmail || !allowedpsw){			
+			loginErrorHandling(rd,request,response);
+		}
+	}
+	
+	/**
+	 * This method handles the login errors
+	 * @param request @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @param response @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @param rd The RequestDispatcher than takes hand om the response of the login error
+	 * @throws ServletException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @throws IOException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * */		
 	private void loginErrorHandling(RequestDispatcher rd, HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException{
 		String loginErrorMsg = "Login failed!";
@@ -85,6 +115,8 @@ public class AccountServlet extends HttpServlet {
 		rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
 	}
+	
+	/******************doGet() happens when the user logs out**********************/
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -92,9 +124,10 @@ public class AccountServlet extends HttpServlet {
 		try {
 			HttpSession session = request.getSession();
 			boolean authorized = (Boolean) session.getAttribute("authorized");
-			if (authorized)
-				authorized = false;
+			
+			if (authorized)	authorized = false;
 			session.invalidate();
+			
 			String logOutMsg = "Welcome back!";
 			request.setAttribute("logOutMsg", logOutMsg);
 			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");

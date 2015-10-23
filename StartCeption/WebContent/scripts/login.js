@@ -1,9 +1,7 @@
 
-//document.getElementById("passLog").addEventListener("mouseover",verifyPassword);
-//document.getElementById("passLog").addEventListener("mouseout",verifyPassword);
-//document.getElementById("passLog").addEventListener("click",verifyPassword);
-//document.getElementById("passLog").addEventListener("oninput",verifyPassword);
-	
+/**
+ * this method verifies if the password input is allowed
+ * */	
 function verifyPassword() {
 	var pass = document.getElementById("passLog").value;
 	var passArray = pass.split('');
@@ -21,7 +19,12 @@ function verifyPassword() {
 }
 
 
-
+/**
+ * this method generates a message depending if it is allowed or not
+ * @param acceptable true if it is allowed, false otherwise
+ * @param passArray the password converted to a char array
+ * @param c the wrong character to be directed too if there is one
+ * */	
 function generatePasswordMessage(acceptable, passArray, c) {
 	var errorElement = document.getElementById("errorMsg");
 	errorElement.style.fontWeight = "bold";

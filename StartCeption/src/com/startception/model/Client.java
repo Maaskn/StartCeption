@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the CLIENT database table.
+ * @author Erik Sandström
  * 
  */
 @Entity
