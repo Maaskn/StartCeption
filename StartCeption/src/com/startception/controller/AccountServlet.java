@@ -51,7 +51,7 @@ public class AccountServlet extends HttpServlet {
 			if(accountInDB) {
 				
 				HttpSession session = request.getSession();
-	            session.setAttribute("user", "user");
+	            session.setAttribute("authorized", new Boolean(true));
 	            //setting session to expire in 30 mins
 	            session.setMaxInactiveInterval(30*60);
 	           
@@ -60,8 +60,6 @@ public class AccountServlet extends HttpServlet {
 	            response.addCookie(userName);
 	            //response.sendRedirect("welcomeUser.jsp");
 	            request.setAttribute("email", email);
-	            request.setAttribute("sessionId", session.getId());
-	            request.setAttribute("cookieValue", userName.getValue());
 	            rd = request.getRequestDispatcher("welcomeUser.jsp");
 	            rd.forward(request, response);
 
@@ -91,12 +89,23 @@ public class AccountServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();		
-		session.invalidate();
-		String logOutMsg = "Welcome back!";
-		request.setAttribute("logOutMsg", logOutMsg);
-		RequestDispatcher rd= request.getRequestDispatcher("index.jsp");
-		rd.forward(request, response);
+		try {
+			HttpSession session = request.getSession();
+			boolean authorized = (Boolean) session.getAttribute("authorized");
+			if (authorized)
+				authorized = false;
+			session.invalidate();
+			String logOutMsg = "Welcome back!";
+			request.setAttribute("logOutMsg", logOutMsg);
+			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+			rd.forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			if(e instanceof NullPointerException){
+				response.sendRedirect("index.jsp");
+			}
+		}
+
 	}
 	
 	
