@@ -14,6 +14,8 @@ import com.startception.model.DatabaseHandler;
 
 /**
  * Servlet implementation class RegisterServlet
+ * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+ * @author Erik Perez and Erik Sandstrom
  */
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
@@ -54,6 +56,7 @@ public class RegisterServlet extends HttpServlet {
 	 * @param regMsg the message to be displayed if something is not allowed
 	 * @throws ServletException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * @throws IOException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @author Erik Perez and Erik Sandstrom
 	 * */	
 	private void controlInputs(HttpServletRequest request, HttpServletResponse response, RequestDispatcher rd,
 			String email, String password, String regMsg) throws ServletException, IOException {
@@ -77,6 +80,7 @@ public class RegisterServlet extends HttpServlet {
 	 * @param crPassword the encrypted password value to be verified
 	 * @throws ServletException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * @throws IOException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @author Erik Perez and Erik Sandstrom
 	 * */
 	private void controlRegistration(HttpServletRequest request, HttpServletResponse response, RequestDispatcher rd,
 			String crEmail, String crPass) throws ServletException, IOException {

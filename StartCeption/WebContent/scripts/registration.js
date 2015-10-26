@@ -1,5 +1,6 @@
 /**
  * this method verifies if the password input is allowed in the logging
+ * @author Erik Perez
  * */	
 function verifyPassword() {
 	var pass = document.getElementById("passReg").value;
@@ -23,6 +24,7 @@ function verifyPassword() {
  * @param acceptable true if it is allowed, false otherwise
  * @param passArray the password converted to a char array
  * @param c the wrong character to be directed too if there is one
+ * @author Erik Perez
  * */	
 function generatePasswordMessage(acceptable, passArray, c) {
 	var errorElement = document.getElementById("errorMsg");

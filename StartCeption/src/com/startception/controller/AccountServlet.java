@@ -21,6 +21,7 @@ public class AccountServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @author Erik Perez and Erik Sandtröm
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
@@ -59,6 +60,7 @@ public class AccountServlet extends HttpServlet {
 	 * @param rd @see loginErrorHandling(RequestDispatcher rd, HttpServletRequest request, HttpServletResponse response) 
 	 * @throws ServletException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * @throws IOException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @author Erik Perez and Erik Sandtröm
 	 * */
 	private void accountHandling(boolean accountInDB,String email,HttpServletRequest request, HttpServletResponse response,
 			RequestDispatcher rd) throws ServletException, IOException{
@@ -87,6 +89,7 @@ public class AccountServlet extends HttpServlet {
 	 * @param password the password to be verified
 	 * @throws ServletException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * @throws IOException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @author Erik Perez and Erik Sandtröm
 	 * */	
 	private void controlInputs(HttpServletRequest request, HttpServletResponse response,
 			RequestDispatcher rd,String email, String password) throws ServletException, IOException{
@@ -105,6 +108,7 @@ public class AccountServlet extends HttpServlet {
 	 * @param rd The RequestDispatcher than takes hand om the response of the login error
 	 * @throws ServletException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * @throws IOException @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @author Erik Perez and Erik Sandtröm
 	 * */		
 	private void loginErrorHandling(RequestDispatcher rd, HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException{
@@ -115,7 +119,11 @@ public class AccountServlet extends HttpServlet {
 	}
 	
 	/******************doGet() happens when the user logs out**********************/
-
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @author Erik Perez and Erik Sandstrom
+	 * */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

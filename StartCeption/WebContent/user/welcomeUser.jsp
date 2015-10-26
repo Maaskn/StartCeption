@@ -10,6 +10,10 @@
 <body>
 <h1>Feed us to code to another day!</h1>
 <%
+/**
+Session handling
+@author Erik Sandström
+*/
 	//Filter the access
 	Boolean authorized = (Boolean)(session.getAttribute("authorized"));
 	if(authorized == null){
